@@ -292,7 +292,26 @@ spec:
     requests:
       storage: 1Mi
 ```
-
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: test-claim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage  
+```
 # Build and publish your own container image
 
 To build your own custom container image from this repository, you will have to build and push the nfs-subdir-external-provisioner image using the following instructions.
